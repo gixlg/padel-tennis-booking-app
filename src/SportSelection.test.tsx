@@ -7,6 +7,7 @@ function SportSelection() {
             <option value="padle">Padel</option>
             <option value="tennis">Tennis</option>
         </select>
+        <button>Select</button>
     </>;
 }
 
