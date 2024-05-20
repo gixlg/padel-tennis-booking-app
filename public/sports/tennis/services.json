@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Field",
+    "id": "field",
+    "value": 30,
+    "description": "An Amazing Tennis field"
+  },
+  {
+    "name": "Racket",
+    "id": "racket",
+    "value": 105,
+    "description": "A super Tennis racket to rent"
+  }
+]

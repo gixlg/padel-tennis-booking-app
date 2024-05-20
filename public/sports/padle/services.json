@@ -1,0 +1,21 @@
+[
+  {
+    "name": "Something to not show",
+    "id": "something-to-not-show",
+    "value": 30,
+    "description": "Something to not show",
+    "available": false
+  },
+  {
+    "name": "Field",
+    "id": "field",
+    "value": 30,
+    "description": "An Amazing Super Field"
+  },
+  {
+    "name": "Shower",
+    "id": "shower",
+    "value": 5,
+    "description": "An good Shower"
+  }
+]
