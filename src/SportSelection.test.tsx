@@ -18,4 +18,9 @@ describe("Sport Selection", () => {
         expect(screen.getByRole("combobox")).toBeInTheDocument();
     })
 
+    it("should show button", () => {
+        render(<SportSelection/>);
+
+        expect(screen.getByRole("button", {name: "Select"})).toBeInTheDocument();
+    })
 })
