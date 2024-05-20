@@ -1,13 +1,24 @@
 import {fireEvent, render, screen} from "@testing-library/react";
-import React from "react";
+import React, {useRef, useState} from "react";
 
 function SportSelection() {
+    const ref = useRef<HTMLSelectElement>(null);
+    const [selected, setSelected] = useState<string | undefined>(undefined)
+
+    const onClick = () => {
+        const selectedValue = ref?.current?.selectedOptions[0].value
+        setSelected(selectedValue || "");
+    }
+
     return <>
-        <select name="country">
-            <option value="padle">Padel</option>
-            <option value="tennis">Tennis</option>
-        </select>
-        <button>Select</button>
+        {!selected && (<>
+            <select ref={ref} name="country">
+                <option value="padle">Padel</option>
+                <option value="tennis">Tennis</option>
+            </select>
+            <button onClick={onClick}>Select</button>
+        </>)}
+        {selected && (<p>Selected value: {selected}</p>)}
     </>;
 }
 
