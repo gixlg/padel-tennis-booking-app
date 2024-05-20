@@ -1,10 +1,5 @@
 import {jest} from "@jest/globals";
-
-const fetchServices = async (sport: string)=> {
-    const responsePromise = await fetch(`/sports/${sport}/services.json`);
-    let responseData = await responsePromise.json();
-    return responseData.filter((e: any)=> e.available === undefined || e.available);
-}
+import {fetchServices} from "./DomainLogic";
 
 describe("Domain logic", () => {
 
