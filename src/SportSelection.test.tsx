@@ -2,6 +2,7 @@ import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import React, {useRef, useState} from "react";
 import {jest} from "@jest/globals";
 import * as domainLogic from "./DomainLogic";
+import {ServiceList} from "./ServiceList";
 
 function SportSelection() {
     const ref = useRef<HTMLSelectElement>(null);
@@ -20,7 +21,7 @@ function SportSelection() {
             </select>
             <button onClick={onClick}>Select</button>
         </>)}
-        {selected && (<p>Selected value: {selected}</p>)}
+        {selected && (<ServiceList sport={selected} />)}
     </>;
 }
 
