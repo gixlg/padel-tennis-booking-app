@@ -70,6 +70,14 @@ describe("Service List", () => {
         fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
         expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked();
         expect(screen.getByText(/5/i)).toBeInTheDocument();
+    })
 
+    it("Should compute the cost with multiple element selected", () => {
+        render(<ServiceList services={services}/>)
+
+        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+        fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
+
+        expect(screen.getByText(/35/i)).toBeInTheDocument();
     })
 })
