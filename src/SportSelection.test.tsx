@@ -1,7 +1,5 @@
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import React, {useRef, useState} from "react";
-import {jest} from "@jest/globals";
-import * as domainLogic from "./DomainLogic";
 import {ServiceList} from "./ServiceList";
 
 function SportSelection() {
@@ -40,22 +38,6 @@ describe("Sport Selection", () => {
     })
 
     it("should show ONLY selected entry after clicking on the button", async () => {
-        const services = [
-            {
-                name: "Field",
-                id: "field",
-                value: 30,
-                description: "An Amazing Field",
-            },
-            {
-                name: "Shower",
-                id: "shower",
-                value: 5,
-                description: "An good Shower",
-            }
-        ]
-        jest.spyOn(domainLogic, `fetchServices`).mockResolvedValue(services)
-
         render(<SportSelection/>);
 
         fireEvent.click(screen.getByRole("button", {name: "Select"}));
@@ -64,11 +46,6 @@ describe("Sport Selection", () => {
         expect(screen.queryByRole("button", {name: "Select"})).not.toBeInTheDocument();
         //expect(screen.getByText("Selected value: padle")).toBeInTheDocument();
 
-        //copied assertion from ServiceList
-        await waitFor(() => {
-            expect(screen.getAllByRole("checkbox")).toHaveLength(2)
-        });
-        expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
-        expect(screen.getByText("An good Shower")).toBeInTheDocument();
+        expect(screen.getByTestId("service-list")).toBeInTheDocument();
     })
 })

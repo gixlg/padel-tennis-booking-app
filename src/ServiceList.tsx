@@ -17,12 +17,12 @@ export function ServiceList({sport}: { sport: string }) {
         onChange
     } = useServices(sport);
 
-    return <>
+    return <div data-testid="service-list">
         {
             services.map(service =>
                 <ServiceOption key={service.name} service={service} onChange={onChange}/>
             )
         }
         <p>Total is: {total}</p>
-    </>
+    </div>
 }
