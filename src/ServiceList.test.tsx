@@ -10,13 +10,15 @@ type Service =  {
 
 type Services = Service[];
 
-function ServiceList({services}: {services: Services}) {
+function ServiceList({sport}: { sport: string }) {
     const [total, setTotal] = useState(0)
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         const input: HTMLInputElement = event.target;
         setTotal((current) => input.checked ? current + Number(input.value) : current - Number(input.value))
 
     };
+
+    const [services, setServices] = useState<Services>([]);
 
     return <>
         {
@@ -56,7 +58,7 @@ describe("Service List", () => {
     ]
 
     it("Should render multiple checkbox", () => {
-        render(<ServiceList services={services}/>)
+        render(<ServiceList sport="padle" />)
 
         expect(screen.getAllByRole("checkbox")).toHaveLength(2);
         expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
@@ -65,7 +67,7 @@ describe("Service List", () => {
 
     it("Should compute the cost", () => {
 
-        render(<ServiceList services={services}/>)
+        render(<ServiceList sport="padle" />)
 
         fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
         expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked();
@@ -73,7 +75,7 @@ describe("Service List", () => {
     })
 
     it("Should compute the cost with multiple element selected", () => {
-        render(<ServiceList services={services}/>)
+        render(<ServiceList sport="padle" />)
 
         fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
         fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
