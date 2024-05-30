@@ -44,5 +44,7 @@ describe("Service List", () => {
         render(<ServiceList services={services}/>)
 
         expect(screen.getAllByRole("checkbox")).toHaveLength(2);
+        expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
+        expect(screen.getByText("An good Shower")).toBeInTheDocument();
     })
 })
