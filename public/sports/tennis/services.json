@@ -1,12 +1,12 @@
 [
   {
-    "name": "Field",
+    "name": "\uD83C\uDFDF Field",
     "id": "field",
     "value": 30,
     "description": "An Amazing Tennis field"
   },
   {
-    "name": "Racket",
+    "name": "\uD83C\uDFF8 Racket",
     "id": "racket",
     "value": 105,
     "description": "A super Tennis racket to rent"

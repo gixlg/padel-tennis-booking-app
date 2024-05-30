@@ -12,12 +12,22 @@ export function SportSelection() {
 
     return <>
         {!selected && (<>
-            <select ref={ref} name="country">
-                <option value="padle">Padel</option>
-                <option value="tennis">Tennis</option>
-            </select>
-            <button onClick={onClick}>Select</button>
+
+            <div className="field">
+                <label className="label">Select your preferred sport</label>
+                <div className="control">
+                    <div className="select">
+                        <select ref={ref}>
+                            <option value="padle">Padel</option>
+                            <option value="tennis">Tennis</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <button className="button is-link" onClick={onClick}>Select</button>
         </>)}
-        {selected && (<ServiceList sport={selected} />)}
+        {selected && (<ServiceList sport={selected}/>)}
     </>;
 }

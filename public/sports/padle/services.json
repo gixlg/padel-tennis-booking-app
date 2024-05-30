@@ -7,13 +7,13 @@
     "available": false
   },
   {
-    "name": "Field",
+    "name": "\uD83C\uDFDF Field",
     "id": "field",
     "value": 30,
     "description": "An Amazing Super Field"
   },
   {
-    "name": "Shower",
+    "name": "\uD83D\uDEBF Shower",
     "id": "shower",
     "value": 5,
     "description": "An good Shower"
