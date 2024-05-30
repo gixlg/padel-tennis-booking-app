@@ -1,5 +1,10 @@
-import {fireEvent, render, screen} from "@testing-library/react";
-import {ChangeEvent, useState} from "react";
+/* eslint-disable testing-library/no-wait-for-side-effects */
+/* eslint-disable testing-library/no-wait-for-multiple-assertions */
+
+import {fireEvent, render, screen, waitFor} from "@testing-library/react";
+import {ChangeEvent, useEffect, useState} from "react";
+import {fetchServices} from "./DomainLogic";
+import * as domainLogic from "./DomainLogic";
 
 type Service =  {
     name: string,
@@ -19,6 +24,11 @@ function ServiceList({sport}: { sport: string }) {
     };
 
     const [services, setServices] = useState<Services>([]);
+
+    useEffect(() => {
+        fetchServices(sport)
+            .then(setServices)
+    }, []);
 
     return <>
         {
@@ -42,44 +52,52 @@ function ServiceList({sport}: { sport: string }) {
 }
 
 describe("Service List", () => {
-    const services = [
-        {
-            name: "Field",
-            id: "field",
-            value: 30,
-            description: "An Amazing Field",
-        },
-        {
-            name: "Shower",
-            id: "shower",
-            value: 5,
-            description: "An good Shower",
-        }
-    ]
-
-    it("Should render multiple checkbox", () => {
-        render(<ServiceList sport="padle" />)
-
-        expect(screen.getAllByRole("checkbox")).toHaveLength(2);
-        expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
-        expect(screen.getByText("An good Shower")).toBeInTheDocument();
+    beforeEach(()=>{
+        const services = [
+            {
+                name: "Field",
+                id: "field",
+                value: 30,
+                description: "An Amazing Field",
+            },
+            {
+                name: "Shower",
+                id: "shower",
+                value: 5,
+                description: "An good Shower",
+            }
+        ]
+        jest.spyOn(domainLogic, `fetchServices`).mockResolvedValue(services)
     })
 
-    it("Should compute the cost", () => {
-
+    it("Should render multiple checkbox", async () => {
         render(<ServiceList sport="padle" />)
 
-        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
-        expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked();
-        expect(screen.getByText(/5/i)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getAllByRole("checkbox")).toHaveLength(2)
+            expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
+            expect(screen.getByText("An good Shower")).toBeInTheDocument();
+        });
     })
 
-    it("Should compute the cost with multiple element selected", () => {
+    it("Should compute the cost", async () => {
+
         render(<ServiceList sport="padle" />)
 
-        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
-        fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
+        await waitFor( ()=> {
+            fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+            expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked()
+            expect(screen.getByText(/5/i)).toBeInTheDocument()
+        })
+    })
 
-        expect(screen.getByText(/35/i)).toBeInTheDocument();
+    it("Should compute the cost with multiple element selected", async () => {
+        render(<ServiceList sport="padle" />)
+
+        await waitFor( ()=> {
+            fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+            fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
+            expect(screen.getByText(/35/i)).toBeInTheDocument();
+        });
     })
 })
