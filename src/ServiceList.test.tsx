@@ -1,6 +1,3 @@
-/* eslint-disable testing-library/no-wait-for-side-effects */
-/* eslint-disable testing-library/no-wait-for-multiple-assertions */
-
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import {ChangeEvent, useEffect, useState} from "react";
 import {fetchServices} from "./DomainLogic";
@@ -75,29 +72,34 @@ describe("Service List", () => {
 
         await waitFor(() => {
             expect(screen.getAllByRole("checkbox")).toHaveLength(2)
-            expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
-            expect(screen.getByText("An good Shower")).toBeInTheDocument();
         });
+
+        expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
+        expect(screen.getByText("An good Shower")).toBeInTheDocument();
     })
 
     it("Should compute the cost", async () => {
 
         render(<ServiceList sport="padle" />)
 
-        await waitFor( ()=> {
-            fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
-            expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked()
-            expect(screen.getByText(/5/i)).toBeInTheDocument()
-        })
+        await waitFor(() => {
+            expect(screen.getAllByRole("checkbox")).toHaveLength(2)
+        });
+
+        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+        expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked()
+        expect(screen.getByText(/5/i)).toBeInTheDocument()
     })
 
     it("Should compute the cost with multiple element selected", async () => {
         render(<ServiceList sport="padle" />)
 
-        await waitFor( ()=> {
-            fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
-            fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
-            expect(screen.getByText(/35/i)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getAllByRole("checkbox")).toHaveLength(2)
         });
+
+        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+        fireEvent.click(screen.getByRole("checkbox", {name: /Field/i}));
+        expect(screen.getByText(/35/i)).toBeInTheDocument();
     })
 })
