@@ -1,4 +1,5 @@
 import {fireEvent, render, screen} from "@testing-library/react";
+import {ChangeEvent, useState} from "react";
 
 type Service =  {
     name: string,
@@ -10,6 +11,13 @@ type Service =  {
 type Services = Service[];
 
 function ServiceList({services}: {services: Services}) {
+    const [total, setTotal] = useState(0)
+    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const input: HTMLInputElement = event.target;
+        setTotal((current) => input.checked ? current + Number(input.value) : current - Number(input.value))
+
+    };
+
     return <>
         {
             services.map(s =>
@@ -20,12 +28,14 @@ function ServiceList({services}: {services: Services}) {
                             type="checkbox"
                             name={s.name}
                             value={s.value}
+                            onChange={onChange}
                         />
                         {s.name}
                     </label>
                 </div>
             )
         }
+        <p>Total is: {total}</p>
     </>
 }
 
