@@ -1,4 +1,4 @@
-import { render, screen} from "@testing-library/react";
+import {fireEvent, render, screen} from "@testing-library/react";
 
 type Service =  {
     name: string,
@@ -30,26 +30,36 @@ function ServiceList({services}: {services: Services}) {
 }
 
 describe("Service List", () => {
-    it("Should render multiple checkbox", () => {
-        const services = [
-            {
-                name: "Field",
-                id: "field",
-                value: 30,
-                description: "An Amazing Field",
-            },
-            {
-                name: "Shower",
-                id: "shower",
-                value: 5,
-                description: "An good Shower",
-            }
-        ]
+    const services = [
+        {
+            name: "Field",
+            id: "field",
+            value: 30,
+            description: "An Amazing Field",
+        },
+        {
+            name: "Shower",
+            id: "shower",
+            value: 5,
+            description: "An good Shower",
+        }
+    ]
 
+    it("Should render multiple checkbox", () => {
         render(<ServiceList services={services}/>)
 
         expect(screen.getAllByRole("checkbox")).toHaveLength(2);
         expect(screen.getByText("An Amazing Field")).toBeInTheDocument();
         expect(screen.getByText("An good Shower")).toBeInTheDocument();
+    })
+
+    it("Should compute the cost", () => {
+
+        render(<ServiceList services={services}/>)
+
+        fireEvent.click(screen.getByRole("checkbox", {name: /Shower/i}));
+        expect(screen.getByRole("checkbox", {name: /Shower/i})).toBeChecked();
+        expect(screen.getByText(/5/i)).toBeInTheDocument();
+
     })
 })
