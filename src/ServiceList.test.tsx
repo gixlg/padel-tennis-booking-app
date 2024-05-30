@@ -13,12 +13,17 @@ function ServiceList({services}: {services: Services}) {
     return <>
         {
             services.map(s =>
-                <input
-                    key={s.name}
-                    type="checkbox"
-                    name={s.name}
-                    value={s.value}
-                />
+                <div key={s.name}>
+                    <p>{s.description}</p>
+                    <label>
+                        <input
+                            type="checkbox"
+                            name={s.name}
+                            value={s.value}
+                        />
+                        {s.name}
+                    </label>
+                </div>
             )
         }
     </>
