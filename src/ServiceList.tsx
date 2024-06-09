@@ -1,6 +1,7 @@
 import {useServices} from "./Services.hook";
+import {ServiceOption} from "./ServiceOption";
 
-type Service =  {
+export type Service =  {
     name: string,
     id: string,
     value: number,
@@ -18,19 +19,8 @@ export function ServiceList({sport}: { sport: string }) {
 
     return <>
         {
-            services.map(s =>
-                <div key={s.name}>
-                    <p>{s.description}</p>
-                    <label>
-                        <input
-                            type="checkbox"
-                            name={s.name}
-                            value={s.value}
-                            onChange={onChange}
-                        />
-                        {s.name}
-                    </label>
-                </div>
+            services.map(service =>
+                <ServiceOption key={service.name} service={service} onChange={onChange}/>
             )
         }
         <p>Total is: {total}</p>
